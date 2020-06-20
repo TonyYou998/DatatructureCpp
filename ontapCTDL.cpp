@@ -5,7 +5,7 @@ using namespace std;
 
 struct node {
     //int data;
-    char data;
+    int data;
     node* pNext;
    
 };
@@ -37,7 +37,8 @@ void addTail(list&l,node*p) {
 void output(list l) {
     node* p = l.pHead;
     while (p != NULL) {
-        cout << p->data<<" " ;
+        
+        cout << (char)p->data<<" " ;
         p = p->pNext;
     }
     cout << endl;
@@ -130,10 +131,13 @@ void enqueue(list&l,node *temp) {
     }
     
 }
-void dequeue(list&l){
+void dequeue(list&l,list&q){
     
     if (l.pHead != NULL) {
         node* p = l.pHead;
+        int temp = p->data;
+        enqueue(q, getNode(temp));
+        
         l.pHead = p->pNext;
         if (l.pHead == NULL)
             l.pTail = NULL;
@@ -156,8 +160,10 @@ void xuLy2(list &l){
 
     }
 }
-void xuLy3(list &l) {
+void xuLy3(list &l,list&q) {
     char x;
+    createList(q);
+    createList(l);
     string s;
     cin >> x;
     
@@ -165,7 +171,15 @@ void xuLy3(list &l) {
     cin.ignore();
     getline(cin, s);
     for (int i = 0; i < s.length(); i++) {
-        if(s[i]==x)
+        int temp = 0;
+        temp = (int)s[i];
+        
+        if ((int)x != temp)
+            enqueue(l, getNode(temp));
+        else
+            dequeue(l, q);
+        
+
 
     }
   
@@ -173,12 +187,14 @@ void xuLy3(list &l) {
 int main()
 {
     
-    list l;
+    list l,q;
    // int x;
    //cin >> x;
     //xuLy(l, x);
-    xuLy3(l);
-   // output(l);
+
+    xuLy3(l,q);
+    output(q);
+   output(l);
    
     
     
